@@ -1,3 +1,4 @@
+# https://www.acmicpc.net/board/view/25456
 from collections import deque
 import sys
 
@@ -5,14 +6,13 @@ input = sys.stdin.readline
 
 # <= 100
 tc = int(input())
-
+# 50%에서 실패함 -> [1, 2, 3, 5, 8]이 아니라 [1,2,3,5,8] 로 출력하기를 원함
 for _ in range(tc):
     cmds = input()
     size_of_list = int(input())
     _list = input().strip("[]\n ")
     _list = deque([] if len(_list) == 0 else map(int, _list.split(",")))
 
-    # True:
     is_left = True
     is_error = False
     for cmd in cmds:
@@ -32,7 +32,7 @@ for _ in range(tc):
         else:
             _list = list(_list) if is_left else list(_list)[::-1]
 
-        print(_list)
+        print(str(_list).replace(" ", ""))
 
 """
 for t in range(tc):
