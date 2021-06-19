@@ -8,21 +8,24 @@ def is_divisible(dividend, divisor):
     # % 연산자가 비교연산자보다 우선순위가 높으니까 True/False 값이 리턴된다.
     return dividend % divisor == 0
 
-print(is_divisible(6, 2)) # True
+
+print(is_divisible(6, 2))  # True
 
 # REF
 # 주어진 숫자가 짝수인지
 def is_even(num):
     return num % 2 == 0
 
-print(is_even(3)) # False
+
+print(is_even(3))  # False
 
 # REF
 # 주어진 숫자가 홀수인지
 def is_odd(num):
     return num % 2 != 0
 
-print(is_odd(3)) # True
+
+print(is_odd(3))  # True
 
 # REF
 # Dictionary의 모든 키를 list로 변환
@@ -35,19 +38,21 @@ def keys_only(flat_dict):
     # O(1)
     return list(flat_dict.keys())
 
+
 ages = {
     "Peter": 10,
     "Isabel": 11,
     "Anna": 9,
 }
-print(keys_only(ages)) # ['Peter', 'Isabel', 'Anna']
+print(keys_only(ages))  # ['Peter', 'Isabel', 'Anna']
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/last
 # 리스트의 마지막 값을 반환
 def last(lst):
     return lst[-1]
 
-print(last([1, 2, 3])) # 3
+
+print(last([1, 2, 3]))  # 3
 
 # REF
 # 주어진 함수를 리스트의 각 값에 적용한 후 max를 반환
@@ -55,4 +60,5 @@ def max_by(lst, fn):
     # O(N) + O(N)
     return max(map(fn, lst))
 
-print(max_by([{'n': 4}, {'n': 2}, {'n': 8}, {'n': 6}], lambda v: v['n'])) # 8
+
+print(max_by([{"n": 4}, {"n": 2}, {"n": 8}, {"n": 6}], lambda v: v["n"]))  # 8

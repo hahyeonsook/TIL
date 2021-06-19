@@ -23,7 +23,7 @@ def most_frequent(lst):
 
 print(most_frequent([1, 2, 1, 2, 3, 2, 1, 4, 2]))
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/n-times-string
 # 주어진 횟수만큼 동일한 문자열을 출력
 def n_times_string(s, n):
     # 문자에 * 연산을 사용하면 반복할 수 있음.

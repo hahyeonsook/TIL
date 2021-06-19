@@ -7,7 +7,7 @@ def for_each_right(itr, fn):
 
 for_each_right([1, 2, 3], print)  # 3 2 1
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/has-duplicates
 # 리스트에 중복된 값이 있으면 True, 없으면 False
 def has_duplicates(lst):
     return len(lst) != len(set(lst))
@@ -19,7 +19,7 @@ y = [1, 2, 3, 4, 5]
 print(has_duplicates(x))  # True
 print(has_duplicates(y))  # False
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/head
 # 리스트에서 첫번째 값을 반환
 def head(lst):
     return lst[0]
@@ -28,14 +28,14 @@ def head(lst):
 print(head([1, 2, 3]))  # 1
 
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/in-rangesa
 # 주어진 숫자가 해당 범위 내에 있는지 확인
 def in_range(n, start, end=0):
     # end가 주어지지 않을 경우, end=0 이므로 start보다 end가 작을 경우 end <= n <= start로 계산
     return start <= n <= end if end >= start else end <= n <= start
 
-print(in_range(3, 2, 5)) # True
-print(in_range(3, 4)) # True
-print(in_range(2, 3, 5)) # False
-print(in_range(3, 3)) # False
 
+print(in_range(3, 2, 5))  # True
+print(in_range(3, 4))  # True
+print(in_range(2, 3, 5))  # False
+print(in_range(3, 3))  # False

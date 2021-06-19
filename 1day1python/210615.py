@@ -25,7 +25,7 @@ def take_right(itr, n=1):
 
 print(take_right([1, 2, 3], 2))  # [2, 3]
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/union
 # 두 리스트 중에서 하나의 리스트에라도 존재하는 모든 값을 반환
 def union(a, b):
     # 두 리스트를 set으로 만든 후 합집합 연산인 |를 사용한다.

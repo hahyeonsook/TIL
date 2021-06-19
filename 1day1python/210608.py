@@ -1,4 +1,4 @@
-# REF
+# REF https://www.30secondsofcode.org/python/s/initial
 # 마지막 값을 제외한 모든 값을 반환
 def initial(lst):
     return lst[:-1]
@@ -24,7 +24,7 @@ def initialize_list_with_values(n, val=0):
 
 print(initialize_list_with_values(5, 2))  # [2, 2, 2, 2, 2]
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/intersection
 # 두 리스트에 존재하는 값으로 리스트를 만듦
 def intersection(a, b):
     _a, _b = set(a), set(b)
