@@ -1,4 +1,4 @@
-# REF
+# REF https://www.30secondsofcode.org/python/s/unique-elements
 # 주어진 리스트의 고유한 값들을 반환
 def unique_elements(lst):
     return list(set(lst))
