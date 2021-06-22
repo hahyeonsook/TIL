@@ -1,4 +1,4 @@
-# REF
+# REF https://www.30secondsofcode.org/python/s/tail
 # 첫번째 값을 제외한 리스트의 모든 값을 반환
 def tail(lst):
     return lst[1:] if len(lst) > 1 else lst
@@ -7,7 +7,7 @@ def tail(lst):
 print(tail([1, 2, 3]))  # [2, 3]
 print(tail([1]))  # [1]
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/take
 # 앞에서부터 n개의 값을 반환
 def take(itr, n=1):
     return itr[:n]
@@ -16,7 +16,7 @@ def take(itr, n=1):
 print(take([1, 2, 3], 5))  # [1, 2, 3]
 print(take([1, 2, 3], 0))  # []
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/take-right
 # 끝에서부터 n개의 값을 반환
 def take_right(itr, n=1):
     # - index는 뒤에서 부터 값에 접근할 때 사용

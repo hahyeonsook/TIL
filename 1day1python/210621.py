@@ -51,6 +51,8 @@ def is_prime(n):
     return all(n % i for i in range(3, int(sqrt(n)) + 1, 2))
 
 
+print(is_prime(26))  # False
+
 # 에라토스테네스의 체
 # 소수란, 2보다 큰 자연수 중에서 1과 자기 자신을 제외한 자연수로는 나누어 떨어지지 않는 자연수
 # 2부터 n-1까지 돌려보면 된다 -> O(n)
@@ -74,4 +76,4 @@ def is_prime_number(n):
         return [i for i in range(2, n + 1) if array[i]]
 
 
-print(is_prime_number(26))
+print(is_prime_number(26))  # [2, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25]
