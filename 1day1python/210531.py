@@ -1,4 +1,4 @@
-# REF
+# REF https://www.30secondsofcode.org/python/s/every-nth
 # 리스트의 모든 n번째 값을 반환.
 def every_nth(lst, nth):
     # 인덱스 증가폭 지정하여 범위 내에서 인덱스 건너뛰며 가져올 수 있음.
