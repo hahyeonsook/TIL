@@ -6,7 +6,7 @@ def initial(lst):
 
 print(initial([1, 2, 3]))  # [1, 2]
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/initialize-list-with-range
 # 주어진 범위만큼의 리스트, 각 값은 step 만큼 커짐
 def initialize_list_with_range(end, start=0, step=1):
     return list(range(start, end + 1, step))
