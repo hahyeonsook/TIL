@@ -7,7 +7,7 @@ def unique_elements(lst):
 print(unique_elements([1, 2, 2, 3, 4, 5, 3]))  # [1, 2, 3, 4, 5]
 
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/values-only
 # 딕셔너리의 모든 값을 리스트로 반환
 def values_only(flat_dict):
     # flat_dict.values()

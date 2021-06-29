@@ -33,7 +33,7 @@ def n_times_string(s, n):
 print(n_times_string("py", 4))  # 'pypypypy'
 
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/offset
 # 주어진 요소의 개수만큼을 리스트의 끝으로 이동
 def offset(lst, offset):
     #         offset=2

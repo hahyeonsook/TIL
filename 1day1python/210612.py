@@ -1,4 +1,4 @@
-# REF
+# REF https://www.30secondsofcode.org/python/s/sample
 # 리스트에서 랜덤하게 값을 반환
 from random import randint
 

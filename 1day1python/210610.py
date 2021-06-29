@@ -1,4 +1,4 @@
-# REF
+# REF https://www.30secondsofcode.org/python/s/max-element-index
 # 리스트에서 가장 큰 값의 인덱스를 반환
 def max_element_index(arr):
     # max는 가장 큰 값을 반환
