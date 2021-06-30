@@ -10,7 +10,7 @@ def sample(lst):
 print(sample([3, 7, 9, 11]))
 
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/similarity
 # 두 리스트에 모두 있는 값들을 반환
 def similarity(a, b):
     # return list(set(a) & set(b))

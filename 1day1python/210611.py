@@ -13,7 +13,7 @@ print(min_n([1, 2, 3], 2))  # [1, 2]
 print(min_n([1, 2, 3], 3))  # [1, 2, 3]
 
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/most-frequent
 # 리스트에서 개수가 가장 많은 값을 반환
 def most_frequent(lst):
     # Callable object란 함수처럼 호출될 수 있는 객체를 말한다.
