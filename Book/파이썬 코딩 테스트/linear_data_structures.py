@@ -7,6 +7,7 @@
 
 # 덧셈하여 타겟을 만들 수 있는 배열의 두 숫자 인덱스를 리턴하라.
 
+
 import re
 
 
@@ -374,7 +375,7 @@ class Solution:
 
 
 # 데크를 이용한 최적화
-from collections import deque
+from collections import defaultdict, deque
 
 
 class Solution:
@@ -475,5 +476,244 @@ class Solution:
         return l1
 
 
-######
-####해시
+# 3부 선형 자료구조/해시 테이블
+
+# 해시맵 디자인
+# 다음의 기능을 제공하는 해시맵을 디자인하라.
+# put(key, value)
+# get(key)
+# remove(key)
+import collections
+
+
+class ListMode:
+    def __init__(self, key=None, value=None):
+        self.key = key
+        self.value = value
+        self.next = None
+
+
+class MyHashMap:
+    def __init__(self):
+        self.size = 1000
+        self.table = collections.defaultdict(ListMode)
+
+    def put(self, key: int, value: int) -> None:
+        index = key % self.size
+        # defaultdict로 자동으로 생성해주기 때문에
+        # self.table[index] is None은 항상 False이다.
+        # 인덱스에 노드가 없다면 삽입 후 종료
+        if self.table[index].value is None:
+            self.table[index] = ListMode(key, value)
+            return
+
+        # 해시 충돌이 발생하는 경우
+        # 개별 체이닝 방식으로 충돌을 해결.
+        # 인덱스에 노드가 존재하는 경우 연결 리스트 처리
+        p = self.table[index]
+        while p:
+            # 이미 키가 존재하는 경우, 값을 저장하고 빠짐.
+            if p.key == key:
+                p.value = value
+                return
+            if p.next is None:
+                break
+            # p의 next로 이동해서 끝의 연결 리스트를 찾음.
+            p = p.next
+        p.next = ListMode(key, value)
+
+    # 조회
+    def get(self, key: int) -> int:
+        index = key % self.size
+        if self.table[index].value is None:
+            return -1
+
+        # 노드가 존재할 때 일치하는 키 탐색
+        p = self.table[index]
+        while p:
+            if p.key == key:
+                return p.value
+            p = p.next
+        return -1
+
+    # 삭제
+    def remove(self, key: int) -> None:
+        index = key % self.size
+        if self.table[index].value is None:
+            return
+
+        # 인덱스의 첫 번째 노드일 때 삭제 처리
+        p = self.table[index]
+        if p.key == key:
+            self.table[index] = ListMode() if p.next is None else p.next
+            return
+
+        # 연결 리스트의 노드 삭제
+        prev = p
+        while p:
+            if p.key == key:
+                prev.next = p.next
+                return
+            prev, p = p, p.next
+
+
+# J는 보석이며, S는 갖고 있는 돌이다. S에는 보석이 몇 개나 있을까? 대소문자는 구분한다.
+J = "aA"
+S = "aAAbbbb"
+
+
+def numJewelsInStones(J: str, S: str) -> int:
+    freqs = {}
+    count = 0
+
+    # 돌(S)의 빈도 수 계산
+    for char in S:
+        if char not in freqs:
+            freqs[char] = 1
+        else:
+            freqs[char] += 1
+
+    # 보석(J)의 빈도 수 계산
+    for char in J:
+        if char in freqs:
+            count += freqs[char]
+
+    return count
+
+
+print(numJewelsInStones(J, S))
+
+# defaultdict를 이용한 비교 생략
+import collections
+
+
+def numJewelsInStones(J: str, S: str) -> int:
+    freqs = collections.defaultdict(int)
+    count = 0
+
+    # 비교 없이 돌(S) 빈도 수 계산
+    for char in S:
+        freqs[char] += 1
+
+    # 비교없이 보석(J) 빈도 수 합산
+    for char in J:
+        count += freqs[char]
+
+    return count
+
+
+print(numJewelsInStones(J, S))
+
+
+# Counter로 계산 생략
+def numJewelsInStones(J: str, S: str) -> int:
+    freqs = collections.Counter(S)  # 돌(S) 빈도 수 계산
+    count = 0
+
+    for char in J:
+        # Counter는 존재하지 않는 키의 경우 KeyError를 발생하는 게 아니라 0을 출력해주기 때문에,
+        # defaultdict와 마찬가지로 에러에 대한 예외 처리 없이 할 수 있음.
+        count += freqs[char]
+
+    return count
+
+
+# 파이썬다운 방식
+def numJewelsInStones(J: str, S: str) -> int:
+    # [s for s in S] >>> ['a', 'A', 'A', 'b', 'b', 'b', 'b']
+    # [s in J for s in S] >>> [True, True, True, False, False, False, False]
+    return sum(s in J for s in S)
+
+
+print(numJewelsInStones(J, S))
+
+
+# 중복 문자가 없는 가장 긴 부분 문자열의 길이를 리턴
+string1 = "abcabcdbb"
+string2 = "bbbbb"
+string3 = "pwwkew"
+
+# 슬라이딩 윈도우와 투 포인터로 사이즈 조절
+def lengthOfLongestSubstring(s: str) -> int:
+    used = {}
+    # start, index가 두 개의 포인터임.
+    # 각각 연속적이지 않은 부분 문자열의 시작과 끝을 맡고 있음.
+    max_length = start = 0
+    for index, char in enumerate(s):
+        # 이미 등장했던 문자라면 'start' 위치 갱신
+        #                   슬라이싱 밖에 있는 동일한 문자는 무시하기 위한 조건
+        #                   슬라이싱이란, 현재 탐색하고 있는 중복없는 부분 문자열 부분을 말함.
+        if char in used and start <= used[char]:
+            # 이 경우 start는 이 전에 나왔던 char의 위치 + 1이 된다.
+            # 왜냐면, start는 중복없는 문자열의 시작이어야 하므로,
+            # 중복된 문자의 다음부터 시작해야 조건을 맞출 수 있기 때문
+            start = used[char] + 1
+        # 처음 보는 문자일 경우, 부분 문자열의 길이를 확인하면서 더 큰 값인 경우 갱신.
+        else:
+            max_length = max(max_length, index - start + 1)
+
+        # 현재 문자의 위치 삽입
+        used[char] = index
+
+    return max_length
+
+
+lengthOfLongestSubstring(string1)
+lengthOfLongestSubstring(string2)
+lengthOfLongestSubstring(string3)
+
+# 상위 k번 이상 등장하는 요소를 추출하라.
+nums = [1, 1, 1, 2, 2, 3]
+k = 2
+
+# Counter를 이용한 음수 순 추출
+
+import collections
+import heapq
+
+
+def topKRfrequent(nums: List[int], k: int) -> List[int]:
+    freqs = collections.Counter(nums)
+    freqs_heaps = []
+
+    for f in freqs:
+        #              원소를 추가할 list, 추가할 원소
+        #                            f의 횟수를 음수로,
+        # 이렇게 음수로 하면 최대 힙을 얻을 수 있음.
+        heapq.heappush(freqs_heaps, (-freqs[f], f))
+
+    topk = list()
+    # k번 만큼 추출, 최소 합(Min Heap)이므로 가장 작은 음수 순으로 추출
+    for _ in range(k):
+        # heap[0]은 최소 값이 나옴.
+        # heappop도 최소 값이 나오는데, 여기는 최대 힙으로 저장했으므로, 최대 값이 나옴
+        # 튜플로 (횟수, 요소)로 저장되어 있으므로 [1] 을 출력하면 요소 값만 출력할 수 있음.
+        topk.append(heapq.heappop(freqs_heaps)[1])
+
+    return topk
+
+
+print(topKRfrequent(nums, k))
+
+
+def topKRfrequent(nums: List[int], k: int) -> List[int]:
+    # [(1, 3), (2, 2)] -> [(1, 2), (3, 2)]로 [요소, 횟수]로 바뀌게 됨.
+    return list(zip(*collections.Counter(nums).most_common(k)))[0]
+
+
+# zip() 함수는 2개 이상의 시퀀스를 짧은 길이를 기준으로 일대일 대응하는 새로운 튜플 시퀀스를 만드는 역할을 한다.
+# >>> a=[1,2,3,4,5]
+# >>> b=[2,3,4,5]
+# >>> c=[3,4,5]
+# >>> list(zip(a, b))
+# 짧은 b를 기준으로 a와 일대일 대응하는 새로운 튜플 시퀀스를 만듦.
+# >>> [(1, 2), (2, 3), (3, 4), (4, 5)]
+# >>> list(zip(a,b,c))
+# 짧은 c를 기준으로 a와 b를 일대일 대응하는 새로운 시퀀스를 만듦.
+# [(1, 2, 3), (2, 3, 4), (3, 4, 5)]
+
+# * 언패킹
+# >>> collections.Counter(nums).most_common()
+# [(1, 3), (2, 2), (3, 1)]
+# >>> list(zip(collections.Counter(nums).most_common(2)))
+# [((1, 3),), ((2, 2),)]
