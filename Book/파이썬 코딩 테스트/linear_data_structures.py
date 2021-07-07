@@ -341,7 +341,7 @@ print(maxProfit(prices))
 # 따라서 파이썬에서 sys.maxsize로 충분히 모든 테스트 케이스를 통과할 수 있다.
 
 # 연결 리스트
-class ListMode:
+class ListNode:
     def __init__(self, x):
         self.val = x
         self.next = None
@@ -354,7 +354,7 @@ from typing import List
 
 
 class Solution:
-    def isPalindrome(head: ListMode) -> bool:
+    def isPalindrome(head: ListNode) -> bool:
         q: List = []
 
         if not head:
@@ -379,7 +379,7 @@ from collections import defaultdict, deque
 
 
 class Solution:
-    def isPalindrome(head: ListMode) -> bool:
+    def isPalindrome(head: ListNode) -> bool:
         q: Deque = deque()
 
         if not head:
@@ -434,11 +434,11 @@ class Solution:
         return not rev
 
 
-head = ListMode(1)
-head.next = ListMode(2)
-head.next.next = ListMode(3)
-head.next.next.next = ListMode(2)
-head.next.next.next.next = ListMode(1)
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(2)
+head.next.next.next.next = ListNode(1)
 
 sol = Solution
 print(sol.isPalindrome(head))
@@ -454,17 +454,17 @@ print(sol.isPalindrome(head))
 
 # 두 정렬 리스트의 병합
 # 정렬되어 있는 두 연결 리스트를 합쳐라.
-l1 = ListMode(1)
-l1.next = ListMode(2)
-l1.next.next = ListMode(4)
+l1 = ListNode(1)
+l1.next = ListNode(2)
+l1.next.next = ListNode(4)
 
-l2 = ListMode(1)
-l2.next = ListMode(3)
-l2.next.next = ListMode(4)
+l2 = ListNode(1)
+l2.next = ListNode(3)
+l2.next.next = ListNode(4)
 
 # 재귀 구조로 연결
 class Solution:
-    def mergeTwoLists(self, l1: ListMode, l2: ListMode) -> ListMode:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
         if (not l1) or (l2 and l1.val > l2.val):
             l1, l2 = l2, l1
         # l1에 답 list를 생성함.
@@ -472,8 +472,31 @@ class Solution:
         # 그리고 그 값을 제외한 잘린 값을 mergeTwoLists로 보내서 next를 지정하도록 함.
         if l1:
             l1.next = self.mergeTwoLists(l1.next, l2)
-        # l1은 첫번째 if 문에서 항상 li2.val보다 작은 값을 가진 listmode를 return하게 됨.
+        # l1은 첫번째 if 문에서 항상 li2.val보다 작은 값을 가진 listNode를 return하게 됨.
         return l1
+
+
+# 역순 연결 리스트
+class Solution:
+    def reverseList(head: ListNode) -> ListNode:
+        def reverse(node: ListNode, prev: ListNode = None):
+            if not node:
+                return prev
+            next, node.next = node.next, prev
+            return reverse(next, node)
+
+        return reverse(head)
+
+
+class Solution:
+    def reverseList(haed: ListNode) -> ListNode:
+        node, prev = head, None
+
+        while node:
+            next, node.next = node.next, prev
+            prev, node = (node,)
+
+        return prev
 
 
 # 3부 선형 자료구조/해시 테이블
@@ -486,7 +509,7 @@ class Solution:
 import collections
 
 
-class ListMode:
+class ListNode:
     def __init__(self, key=None, value=None):
         self.key = key
         self.value = value
@@ -496,7 +519,7 @@ class ListMode:
 class MyHashMap:
     def __init__(self):
         self.size = 1000
-        self.table = collections.defaultdict(ListMode)
+        self.table = collections.defaultdict(ListNode)
 
     def put(self, key: int, value: int) -> None:
         index = key % self.size
@@ -504,7 +527,7 @@ class MyHashMap:
         # self.table[index] is None은 항상 False이다.
         # 인덱스에 노드가 없다면 삽입 후 종료
         if self.table[index].value is None:
-            self.table[index] = ListMode(key, value)
+            self.table[index] = ListNode(key, value)
             return
 
         # 해시 충돌이 발생하는 경우
@@ -520,7 +543,7 @@ class MyHashMap:
                 break
             # p의 next로 이동해서 끝의 연결 리스트를 찾음.
             p = p.next
-        p.next = ListMode(key, value)
+        p.next = ListNode(key, value)
 
     # 조회
     def get(self, key: int) -> int:
@@ -545,7 +568,7 @@ class MyHashMap:
         # 인덱스의 첫 번째 노드일 때 삭제 처리
         p = self.table[index]
         if p.key == key:
-            self.table[index] = ListMode() if p.next is None else p.next
+            self.table[index] = ListNode() if p.next is None else p.next
             return
 
         # 연결 리스트의 노드 삭제
@@ -717,3 +740,180 @@ def topKRfrequent(nums: List[int], k: int) -> List[int]:
 # [(1, 3), (2, 2), (3, 1)]
 # >>> list(zip(collections.Counter(nums).most_common(2)))
 # [((1, 3),), ((2, 2),)]
+
+
+# 데크, 우선순위 큐
+# 데크는 더블 엔디드 큐(Double-Ended Queue)의 줄임말로, 글자 그대로 양쪽 끝을 모두 추출할 수 있는, 큐를 일반화한 형태의 추상 자료형(ADT)
+# Python에서는 collections 모듈에서 deque라는 이름으로 지원한다.
+# collections.deque는 이중 연결 리스트로 구현되어 있다. CPython에서는 고정 길이 하위 배열을 지닌 이중 연결 리스트로 구현되어 있으며,
+# 내부 구현을 살펴보면 dequeobject가 block 노드의 이중 연결 리스트로 구현되어 있는 것을 확인할 수 있다.
+
+"""
+//cpython/Modlues/_collectionsmodule.c
+typedef struct BLOCK{
+    struct BLOCK *leftlink;
+    PyObject *data[BLOCKLEN];
+    struct BLOCK *rightlink;
+} block;
+
+typedef struct {
+    ...
+    block *leftblock;
+    block *rightblock;
+    Py_ssize leftindex;
+    Py_ssize rightindex;
+    Py_ssize maxlen;
+    ...
+} dequeObject;
+"""
+# 사실상 아무런 의미없이 단순히 풀이를 위해 구현되어 있다.
+# 다음 연산을 제공하는 원형 데크를 디자인하라.
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+
+class MyCircularDeque:
+    # k: 최대 길이 정보
+    def __init__(self, k: int):
+        self.head, self.tail = ListNode(None), ListNode(None)
+        self.k, self.len = k, 0
+        self.head.right, self.tail.left = self.tail, self.head
+
+    # 이중 연결 리스트에 신규 노드 삽입
+    def _add(self, node: ListNode, new: ListNode):
+        n = node.right
+        node.right = new
+        new.left, new.right = node, n
+
+    def _del(self, node: ListNode):
+        n = node.right.right
+        node.right = n
+        n.left = node
+
+    def insertFront(self, value: int) -> bool:
+        if self.len == self.k:
+            return False
+        self.len += 1
+        self._add(self.head, ListNode(value))
+        return True
+
+    def insertLast(self, value: int) -> bool:
+        if self.len == self.k:
+            return False
+        self.len += 1
+        self._add(self.tail, ListNode(value))
+        return True
+
+    def deleteFront(self) -> bool:
+        if self.len == 0:
+            return False
+        self.len -= 1
+        self._del(self.head)
+        return True
+
+    def deleteLast(self) -> bool:
+        if self.len == 0:
+            return False
+        self.len -= 1
+        self._del(self.tail)
+        return True
+
+    def getFront(self) -> int:
+        return self.head.val if self.len else -1
+
+    def getLast(self) -> int:
+        return self.tail.val if self.len else -1
+
+    def isEmpty(self) -> bool:
+        return self.len == 0
+
+    def isFull(self) -> bool:
+        return self.len == self.k
+
+
+# 우선순위 큐
+# 큐 도는 스택과 같은 추상 자료형과 유사하지만 추가로 각 요소의 우선순위와 연관되어 있다.
+# 힙 정렬 등을 활용한다.
+
+# k 개의 정렬된 리스트를 1개의 정렬된 리스트로 병합하라.
+def print_linked_list(lists):
+    node = lists
+    while node:
+        print(f"{node.val}", end=" ")
+        node = node.next
+    print()
+
+
+class ListNode:
+    def __init__(self, val=None):
+        self.val = val
+        self.next = None
+
+
+l1 = ListNode(1)
+l1.next = ListNode(4)
+l1.next.next = ListNode(5)
+
+l2 = ListNode(1)
+l2.next = ListNode(3)
+l2.next.next = ListNode(4)
+
+l3 = ListNode(2)
+l3.next = ListNode(6)
+
+lsts = [l1, l2, l3]
+
+import heapq
+
+
+def mergeLists(lists: List[ListNode]) -> ListNode:
+    root = result = ListNode(None)
+    heap = []
+
+    # 각 연결 리스트의 루트를 힙에 저장
+    for i in range(len(lists)):
+        # 연결 리스트의 루트값이 같을 경우, 에러가 발생함
+        # 중복 값을 구분할 수 있는 추가 인자가 필요함.
+        if lists[i]:
+            heapq.heappush(heap, (lists[i].val, i, lists[i]))
+
+    # 힙 추출 이후 다음 노드는 다시 저장
+    while heap:
+        # node = (연결 리스트의 루트 값, 연결 리스트의 index 값, 연결 리스트의 루트 노드)
+        #      가장 작은 노드의 연결 리스트부터 차례로 나옴.
+        node = heapq.heappop(heap)
+        # 연결 리스트의 index 값
+        idx = node[1]
+        # id(result) == id(node[2]) True
+        # id(result.next) == id(node[2]) False
+        # 이 부분은 root에 값을 저장하기 위한 것임
+        # result = node[2]로 하면 root = result이므로 값이 계속 node[2]로 변경됨.
+        # 그런데, next를 먼저 지정하면 root는 None->node[2]의 상태가 됨.
+        result.next = node[2]
+        # 2221366727872 2221366727872
+        # print(id(root.next), id(result.next))
+
+        result = result.next
+        # 2221366727536 2221366727872
+        # print(id(root), id(result))
+        # k개의 연결 리스트가 모두 힙에 계속 들어 있어야 그 중에서 가장 작은 노드가 항상 차례로 나올 수 있으므로,
+        # 추출한 연결 리스트의 그 다음 노드는 다시 힙에 추가함.
+        if result.next:
+            heapq.heappush(heap, (result.next.val, idx, result.next))
+    return root.next
+
+
+n = mergeLists(lsts)
+print_linked_list(n)
+
+# PriorityQueue의 _get()와 _put()은 모두 heapq 모듈의 heappop()과 heappush()를 그대로 사용하므로 둘은 동일하다.
+# 차이점은 스레드 세이프 클래스라는 점이다.
+# 파이썬은 GIL 특성상 멀티 스레딩이 거의 의미가 없기 때문에 대부분 멀치 프로세싱으로 활용한다.
+# 따라서 굳이 멀티 스레드로 구현할 게 아니라면 PriorityQueue 모듈은 사용할 필요가 없다.
+
+# 파이썬 전역 인터프리터 락(GIL)
+# 하나의 스레드가 자원을 독점하는 형태로 실행된다. CPU가 하나던 당시에는 그럴만 했으나, 지금처럼 멀티 코어가 당연한 세상에서
+# 하나의 스레드가 자원을 독점하고 실행되는 제약은 치명적이다.
