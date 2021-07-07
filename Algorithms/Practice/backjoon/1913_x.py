@@ -32,7 +32,9 @@ def solution(n, m):
         while x < n - 1 and matrix[x][y] == 0:
             matrix[x][y] = nums.pop()
             x += step
-        x, y = y, x
+        while y < n - 1 and matrix[x][y] == 0:
+            matrix[x][y] = nums.pop()
+            y += step
         step *= -1
 
     return matrix
