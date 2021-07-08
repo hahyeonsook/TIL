@@ -27,7 +27,7 @@ def is_odd(num):
 
 print(is_odd(3))  # True
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/keys-only
 # Dictionary의 모든 키를 list로 변환
 def keys_only(flat_dict):
     # return [key for key, value in flat_dict.items()]
