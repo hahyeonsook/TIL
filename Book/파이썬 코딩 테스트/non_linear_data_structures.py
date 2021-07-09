@@ -45,6 +45,7 @@ print(iterative_dfs(1))  # [1, 4, 3, 5, 7, 6, 2]
 # 큐를 이용한 반복 구조로 구현
 def iterative_bfs(start_v):
     discovered = [start_v]
+    # queue는 검사해야 할 노드의 목록
     queue = [start_v]
     while queue:
         v = queue.pop(0)
@@ -57,6 +58,11 @@ def iterative_bfs(start_v):
 
 
 print(iterative_bfs(1))  # [1, 2, 3, 4, 5, 6, 7]
+
+# 백트래킹
+# 백트래킹은 해결책에 대한 후보를 구축해 나아가다 가능성이 없다고 판단되면, 즉시 후보를 포기(Backtrack)하고 정답을 찾아가는 범용적인 알고리즘
+# 탐색을 하다가 더 갈 수 없으면 왔더 길을 되돌아가 다른 길을 찾는다는 데서 유래했다. DFS는 백트래킹의 골격을 이루는 알고리즘이다.
+# 주로 재귀로 구현하며, 기본적으로 모두 DFS의 범주에 속한다.
 
 # 섬의 개수
 grid1 = [
