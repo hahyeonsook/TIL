@@ -33,7 +33,7 @@ def filter_non_unique(lst):
 
 print(filter_non_unique([1, 2, 2, 3, 4, 4, 5]))  # [1, 3, 5]
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/for-each
 # 리스트의 모든 값으로 주어진 함수를 실행.
 # python에서 함수는 1급 객체이기 때문에 매개변수로 전달할 수 있음.
 def for_each(itr, fn):

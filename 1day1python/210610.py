@@ -9,7 +9,7 @@ def max_element_index(arr):
 
 print(max_element_index([5, 8, 9, 7, 10, 3, 0]))  # 4
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/max-n
 # 리스트에서 큰 순서대로 n개의 값을 반환
 def max_n(lst, n=1):
     # sorted는 새로운 list를 반환, list.sort()는 해당 리스트의 값을 바꾸고 None 반환
