@@ -1,4 +1,4 @@
-# REF
+# REF https://www.30secondsofcode.org/python/s/min-n
 # 리스트에서 작은 순서대로 N개의 값을 반환 (오름차순으로 정렬)
 # N이 리스트의 길이보다 크거나 같으면 원래 리스트를 반환
 def min_n(lst, n=1):
