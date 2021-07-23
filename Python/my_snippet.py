@@ -176,3 +176,14 @@ def isPrime(number):
         if number % i == 0:
             return False
     return True
+
+
+# 달팽이
+
+# https://www.programmersought.com/article/30524578627/
+# 2차원 -> 1차원 달팽이
+def snail3(array):
+    return list(array[0]) + snail3(list(zip(*array[1:]))[::-1]) if array else []
+
+
+pprint.pprint(snail3([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
