@@ -476,3 +476,124 @@ def findCheapsPrice(
 # 포화이진트리: 모든 노드가 2개의 자식 노드를 갖고 있으며, 모든 리프 노드가 동일한 깊이 또는 레벨을 갖는다.
 
 # 이진 트리의 최대 깊이를 구하라.
+
+
+class TreeNode:
+    def __init__(self, x) -> None:
+        self.val = x
+        self.left = None
+        self.right = None
+
+
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if root is None:
+            return 0
+        queue = collections.deque([root])
+        depth = 0
+        # 현재 depth에 해당하는 모든 노드가 들어 있음.
+        # 현재 depth의 모든 노드니까, 해당 노드들은 모두 같은 부모를 가진 형제 노드임.
+        while queue:
+            depth += 1
+            # 큐 연산
+            # 추출 노드의 자식 노드 삽입
+            for _ in range(len(queue)):
+                cur_root = queue.popleft()
+                if cur_root.left:
+                    queue.append(cur_root.left)
+                if cur_root.right:
+                    queue.append(cur_root.right)
+        # BFS의 반복 횟수 == 길이
+        return depth
+
+
+class Solution:
+    # 중첩 함수는 부모 함수의 변수를 자유롭게 읽어들일 수 있다.
+    # 그러나 중첩 함수에서 부모 함수의 변수를 재할당하게 되면, 참조 ID가 변경되며
+    # 별도의 로컬 변수로 선언된다.
+    # longest는 값을 재할당하기 때문에 부모 함수의 변수를 그대로 사용할 수 없었고, 바깥에서 클래스 변수로
+    # 선언 후 사용했다.
+    longest: int = 0
+
+    def __init__(self, tree: TreeNode) -> None:
+        print(self.diameterOfBinaryTree(tree))
+
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        def dfs(node: TreeNode) -> int:
+            if not node:
+                return -1
+
+            # 왼쪽, 오른쪽 각각 리프 노드까지 탐색
+            left = dfs(node.left)
+            right = dfs(node.right)
+
+            # 가장 긴 경로
+            # 거리는 왼쪽 오른쪽 사이의 경로이므로, 2를 더함.
+            # 이 문제는 두 노드간 가장 긴 경로의 길이이므로,
+            # 루트 노드의 왼쪽 자식의 리프 노드와 오른쪽 자식의 리프 노드 사이의 거리를 구함.
+            # 따라서 left+right+2는 두 자식 사이의 거리에 각 자식들의 노드를 더한 것임.
+            self.longest = max(self.longest, left + right + 2)
+            # 상태값
+            # 리프 노드에서 올라올 때,
+            # 다음 노드에 이전 노드의 거리 값에서 1을 더해서 return 함.
+            return max(left, right) + 1
+
+        dfs(root)
+        return self.longest
+
+
+tree = TreeNode(1)
+tree.right = TreeNode(3)
+tree.left = TreeNode(2)
+tree.left.left = TreeNode(4)
+tree.left.right = TreeNode(5)
+
+sol = Solution(tree)
+
+# 동일한 값을 지닌 가장 긴 경로를 찾아라.
+class Solution:
+    def __init__(self, tree) -> None:
+        print(self.longestUnivaluePath(tree))
+
+    result: int = 0
+
+    def longestUnivaluePath(self, root: TreeNode) -> int:
+        def dfs(node: TreeNode):
+            if not node:
+                return 0
+
+            # 존재하지 않는 노드까지 DFS 재귀 탐색
+            left = dfs(node.left)
+            right = dfs(node.right)
+
+            # 현재 노드가 자식 노드와 동일한 경우 거리 1 증가
+            if node.left and node.left.val == node.val:
+                left += 1
+            else:
+                left = 0
+            if node.right and node.right.val == node.val:
+                right += 1
+            else:
+                right = 0
+
+            # 왼쪽, 오른쪽 자식 노드간 거리의 합 최대값이 결과
+            self.result = max(self.result, left + right)
+            # 부모 노드를 위해 현재까지의 거리를 리턴해준다.
+            # 현재 노드는 양쪽 자식 노드 모두 연결할 수 있지만,
+            # 현재 노드의 부모 노드에서는 지금의 양쪽 자식 노드를 동시에 연결할 수 없다.
+            # 트리는 단방향이므로 어느 한쪽 자식만 택할 수 있다.
+            # 따라서 둘 중 큰 값을 상태값으로 리턴해준다.
+            return max(left, right)
+
+        dfs(root)
+        return self.result
+
+
+tree = TreeNode(5)
+tree.left = TreeNode(4)
+tree.left.left = TreeNode(1)
+tree.left.right = TreeNode(1)
+tree.right = TreeNode(5)
+tree.right.right = TreeNode(5)
+
+sol = Solution(tree)
