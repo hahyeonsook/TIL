@@ -16,7 +16,7 @@ print(initialize_list_with_range(5))  # [0, 1, 2, 3, 4, 5]
 print(initialize_list_with_range(7, 3))  # [3, 4, 5, 6, 7]
 print(initialize_list_with_range(9, 0, 2))  # [0, 2, 4, 6, 8]
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/initialize-list-with-values
 # 주어진 값으로 채운 리스트
 def initialize_list_with_values(n, val=0):
     return [val for x in range(n)]
