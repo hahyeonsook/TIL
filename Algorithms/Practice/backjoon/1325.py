@@ -10,6 +10,7 @@
 # M 개의 줄, 신뢰 관계
 
 # 시간초과
+# 시간초과
 
 import sys
 
@@ -21,16 +22,21 @@ import collections
 
 def solution(n, m):
     graph = collections.defaultdict(list)
-    visited = [False] * (n + 1)
 
-    def recursive_dfs(v, depth=0):
-        visited[v] = True
-        depth += 1
+    # bfs로 풀어보기
+    def bfs(start_v):
+        depth = 0
+        visited = [False] * (n + 1)
+        visited[start_v] = True
+        queue = collections.deque([start_v])
 
-        for w in graph[v]:
-            if not visited[w]:
-                depth = recursive_dfs(w, depth)
-
+        while queue:
+            depth += 1
+            v = queue.popleft()
+            for w in graph[v]:
+                if not visited[w]:
+                    queue.append(w)
+                    visited[w] = True
         return depth
 
     for _ in range(m):
@@ -41,8 +47,7 @@ def solution(n, m):
     max_v = []
     max_depth = 0
     for v in list(graph.keys()):
-        visited = [False] * (n + 1)
-        depth = recursive_dfs(v)
+        depth = bfs(v)
 
         if max_depth < depth:
             max_depth = depth
@@ -50,8 +55,9 @@ def solution(n, m):
         elif max_depth == depth:
             max_v.append(v)
 
-    return " ".join(map(str, sorted(max_v)))
+    for v in sorted(max_v):
+        sys.stdout.write(str(v) + " ")
 
 
 n, m = map(int, input().split())
-print(solution(n, m))
+solution(n, m)
