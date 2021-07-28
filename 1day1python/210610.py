@@ -22,7 +22,7 @@ def max_n(lst, n=1):
 print(max_n([1, 2, 3]))  # [3]
 print(max_n([1, 2, 3], 2))  # [3, 2]
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/median
 # 숫자로 구성된 리스트 값에서 중앙 값을 반환
 def median(lst):
     lst.sort()

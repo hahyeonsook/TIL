@@ -1,4 +1,4 @@
-# REF
+# REF https://www.30secondsofcode.org/python/s/for-each-right
 # 리스트의 모든 값을 오른쪽에서부터 주어진 함수로 실행
 def for_each_right(itr, fn):
     for el in itr[::-1]:
