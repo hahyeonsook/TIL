@@ -34,7 +34,7 @@ print(
 )  # ['This', 'is a', 'multiline', 'string.']
 
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/sum-by
 # 주어진 함수를 리스트의 각 값에 적용한 뒤, 합계를 반환
 def sum_by(lst, fn):
     return sum(map(fn, lst))

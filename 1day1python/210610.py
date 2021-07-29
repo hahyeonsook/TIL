@@ -39,7 +39,7 @@ def median(lst):
 print(median([1, 2, 3]))  # 2
 print(median([1, 2, 3, 4]))  # 2.5
 
-# REF
+# REF https://www.30secondsofcode.org/python/s/min-by
 # 주어진 함수를 리스트의 각 값에 적용한 후 그 중 최소 값을 반환
 def min_by(lst, fn):
     return min(map(fn, lst))

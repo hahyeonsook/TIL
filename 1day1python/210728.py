@@ -9,7 +9,7 @@ def reverse_number(n):
 
 
 # REF https://www.30secondsofcode.org/python/s/decapitalize
-# 문자열의 첫 글자를 바꿔라.
+# 문자열의 첫 글자를 소문자로 바꿔라.
 
 
 def decapitalize(s, upper_rest=False):
