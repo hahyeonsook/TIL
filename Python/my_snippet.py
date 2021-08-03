@@ -180,10 +180,54 @@ def isPrime(number):
 
 # 달팽이
 
-# https://www.programmersought.com/article/30524578627/
+# REF https://www.programmersought.com/article/30524578627/
 # 2차원 -> 1차원 달팽이
+from pprint import pprint
+
+
 def snail3(array):
     return list(array[0]) + snail3(list(zip(*array[1:]))[::-1]) if array else []
 
 
-pprint.pprint(snail3([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
+pprint(snail3([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
+
+# 달팽이 채워넣기
+# REF https://itzjamie96.github.io/2020/11/18/swea-python-1954/
+T = int(input())
+#    R, D, L, U
+dx = [0, 1, 0, -1]
+dy = [1, 0, -1, 0]
+
+for tc in range(1, T + 1):
+    N = int(input())
+    snail = [[0 for _ in range(N)] for _ in range(N)]
+
+    x, y = 0, -1
+    d = 0
+    num = 0
+    while num < N * N:
+
+        if (
+            -1 < x + dx[d % 4] < N  # 이동할 x 값이 -1 보다 크고, N 보다 작을 경우
+            and -1 < y + dy[d % 4] < N  # 이동할 y 값이 -1 보다 크고, N 보다 작을 경우
+            and snail[x + dx[d % 4]][y + dy[d % 4]] == 0  # 이동할 snail의 값이 초기화된 값일 경우
+        ):
+            x = x + dx[d % 4]
+            y = y + dy[d % 4]
+            num += 1
+            snail[x][y] = num
+        else:
+            d += 1
+    print(f"#{tc}")
+    for x in range(len(snail)):
+        print(*snail[x])
+
+# 여러 줄 입력받기
+import sys
+
+while True:
+    try:
+        a, b = map(int, sys.stdin.readline().split())
+        print(a + b)
+    except:
+        break
