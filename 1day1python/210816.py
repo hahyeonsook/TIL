@@ -52,3 +52,14 @@ def find_parity_outliers(nums):
 
 
 print(find_parity_outliers([1, 2, 3, 4, 6]))  # [1, 3]
+
+# REF https://www.codewars.com/kata/525f50e3b73515a6db000b83/train/python
+def create_phone_number(n):
+    phone_number = []
+    for i in [3, 3, 4]:
+        tmp, n = n[:i], n[i:]
+        phone_number.append(("{}" * i).format(*tmp))
+    return ("({}) {}-{}").format(*phone_number)
+
+
+print(create_phone_number([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]))
