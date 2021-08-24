@@ -231,3 +231,45 @@ while True:
         print(a + b)
     except:
         break
+
+# 트라이
+import collections
+
+
+class TrieNode:
+    def __init__(self) -> None:
+        self.word = False  # 단어가 모두 완성되었을 때, True
+        self.children = collections.defaultdict(TrieNode)
+
+
+class Trie:
+    def __init__(self) -> None:
+        self.root = TrieNode()
+
+    # 단어 삽입
+    def insert(self, word: str) -> None:
+        node = self.root
+        for char in word:
+            node = node.children[char]
+        # 단어가 완성되었으므로, 마지막 문자 True
+        node.word = True
+
+    # 단어 존재 여부 판별
+    def search(self, word: str) -> bool:
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        # 마지막에 node.word를 반환하여 해당 문자가 마지막인지 확인함.
+        return node.word
+
+    # 문자열로 시작 단어 존재 여부 판별
+    def startsWith(self, prefix: str) -> bool:
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        # 마지막 node.word가 True인지 확인하지 않고, 자식 노드가 있는지만 확인함.
+        return True
