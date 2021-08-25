@@ -70,6 +70,44 @@ def diftWaysToCompute(input: str) -> List[int]:
     return results
 
 
+def merge(intervals: List[List[int]]) -> List[List[int]]:
+    merged = []
+    for i in sorted(intervals, key=lambda x: x[0]):
+        if merged and i[0] <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], i[1])
+        else:
+            # , 는 중첩 리스트로 만들어주는 역할을 하며, 대괄호 []를 부여한 것과 동일한 역할을 한다.
+            # a += [b] == a += b,
+            merged += (i,)
+    return merged
+
+
+intervals = [[1, 3], [2, 6], [8, 10], [15, 10]]
+print(merge(intervals))
+
+# 삽입 정렬
+class ListNode:
+    def __init__(self, val) -> None:
+        self.val = val
+        self.next = ListNode
+
+
+# 삽입 정렬은 정렬을 해야할 대상과 정렬을 끝낸 대상, 두 그룹으로 나눠 진행한다.
+def insertionSortList(head: ListNode) -> ListNode:
+    cur = parent = ListNode(0)
+    # head는 정렬해야 할 대상, cur은 정렬을 끝낸 대상
+    while head:
+        while cur.next and cur.next.val < head.val:
+            cur = cur.next
+
+        cur.next, head.next, head = head, cur.next, head.next
+
+        # 필요한 경우에만 cur 포인터가 되돌아가도록 처리
+        if head and cur.val > parent.val:
+            cur = parent
+    return cur.next
+
+
 # 브루투 포스
 def fib(N: int) -> int:
     if N <= 1:
