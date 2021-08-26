@@ -108,6 +108,64 @@ def insertionSortList(head: ListNode) -> ListNode:
     return cur.next
 
 
+def isAnagram(s, t):
+    return sorted(s) == sorted(t)
+
+
+def sortColors(nums):
+    red, white, blue = 0, 0, len(nums)
+
+    # mid 값을 기준으로
+    # x < mid |x == mid|x > mid 의 세 부분으로 이동하도록 한다.
+    # 여기서는 mid=1 이고
+    # red 포인터|white 포인터|blue 포인터를 사용한다.
+    while white < blue:
+        if nums[white] > 1:
+            blue -= 1
+            nums[white], nums[blue] = nums[blue], nums[white]
+        elif nums[white] < 1:
+            nums[white], nums[red] = nums[red], nums[white]
+            white += 1
+            red += 1
+        elif nums[white] == 1:
+            white += 1
+
+
+sortColors([2, 0, 2, 1, 1, 0])
+
+import heapq, math
+
+
+def kCloset(points, K):
+    heap = []
+    for (x, y) in points:
+        dist = math.sqrt((0 - x) ** 2 + (0 - y) ** 2)
+        heapq.heappush(heap, (dist, x, y))
+
+    result = []
+    for _ in range(K):
+        (dist, x, y) = heapq.heappop(heap)
+        result.append((x, y))
+    return result
+
+
+def kCloset(points, K):
+    heap = []
+    for (x, y) in points:
+        dist = x ** 2 + y ** 2
+        heapq.heappush(heap, (dist, x, y))
+
+    result = []
+    for _ in range(K):
+        (dist, x, y) = heapq.heappop(heap)
+        result.append((x, y))
+    return result
+
+
+points = [[1, 3], [-2, 2]]
+K = 1
+kCloset(points, K)
+
 # 브루투 포스
 def fib(N: int) -> int:
     if N <= 1:
