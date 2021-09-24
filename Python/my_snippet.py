@@ -222,6 +222,50 @@ for tc in range(1, T + 1):
     for x in range(len(snail)):
         print(*snail[x])
 
+# 달팽이 좌표이동
+# (n//2, n//2) -> (0, 0)
+def snail(n):
+    grid = [[-1 for _ in range(n)] for _ in range(n)]
+    dr, dc = [-1, 0, 1, 0], [0, 1, 0, -1]
+    d, routine = -1, 0
+    r, c = n // 2, n // 2
+    while (r, c) != (0, 0):
+        d = (d + 1) % 4
+        if d % 2 == 0:
+            routine += 1
+
+        gr, gc = r + (dr[d] * routine), c + (dc[d] * routine)
+        while (r, c) != (gr, gc):
+            r, c = r + dr[d], c + dc[d]
+            grid[r][c] = 1  # 1 채우기
+
+            if (r, c) == (0, 0):
+                break
+
+
+# 달팽이 좌표이동
+# (0, 0) -> (n//2, n//2)
+def snail(n):
+    grid = [[-1 for _ in range(n)] for _ in range(n)]
+
+    dr, dc = [1, 0, -1, 0], [0, -1, 0, 1]
+    d, routine = 2, n
+    r, c = 0, -1
+    while (r, c) != (n // 2, n // 2):
+        d = (d + 1) % 4
+        if d % 2 == 0:
+            routine -= 1
+
+        gr, gc = r + (dr[d] * routine), c + (dc[d] * routine)
+        while (r, c) != (gr, gc):
+            r, c = r + dr[d], c + dc[d]
+            grid[r][c] = 1  # 1 채우기
+
+            if (r, c) == (n // 2, n // 2):
+                break
+    return 0
+
+
 # 여러 줄 입력받기
 import sys
 
@@ -273,3 +317,23 @@ class Trie:
             node = node.children[char]
         # 마지막 node.word가 True인지 확인하지 않고, 자식 노드가 있는지만 확인함.
         return True
+
+
+# 진수 변환
+# 10진수 -> n진수 변환
+digits = "0123456789"
+
+
+def convert(num, base):
+    q, r = divmod(num, base)
+    if q == 0:
+        return digits[r]
+    else:
+        return convert(q, base) + digits[r]
+
+
+# 2차원 배열 돌리기
+def rotate(matrix) -> None:
+    tmp = list(map(list, list(zip(*matrix[::-1]))))
+    for i in range(len(tmp)):
+        matrix[i] = tmp[i]
