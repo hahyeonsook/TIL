@@ -3,6 +3,23 @@
 from typing import List
 
 
+def quicksort(A, lo, hi):
+    def partition(lo, hi):
+        pivot = A[hi]
+        left = lo
+        for right in range(lo, hi):
+            if A[right] < pivot:
+                A[left], A[right] = A[right], A[left]
+                left += 1
+        A[left], A[right] = A[hi], A[left]
+        return left
+
+    if lo < hi:
+        pivot = partition(lo, hi)
+        quicksort(A, lo, pivot - 1)
+        quicksort(A, pivot + 1, hi)
+
+
 def majorityElement(nums: List[int]) -> int:
     for num in nums:
         if nums.count(num) > len(num):
