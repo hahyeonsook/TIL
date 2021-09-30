@@ -1,22 +1,16 @@
-import sys
+import sys, pprint
 
 input = sys.stdin.readline
+A = " " + input().strip()
+B = " " + input().strip()
 
+C, R = len(A), len(B)
+dp = [[0 for _ in range(C)] for _ in range(R)]
+for r in range(1, R):
+    for c in range(1, C):
+        if A[c] == B[r]:
+            dp[r][c] = dp[r - 1][c - 1] + 1
+        else:
+            dp[r][c] = max(dp[r - 1][c], dp[r][c - 1])
 
-def solution():
-    A = " " + input().strip()
-    B = " " + input().strip()
-    N, M = len(A), len(B)
-    # dp[i][j] = A[i]번째 글자까지와 B[j]번째 글자까지 비교했을 때의 LCS
-    dp = [[0] * N for _ in range(M)]
-    b = 0
-    for i in range(1, N):
-        for j in range(1, M):
-            if A[i] == B[j]:
-                dp[i][j] = dp[i][j - 1] + 1
-            else:
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
-    return dp[-1][-1]
-
-
-print(solution())
+print(dp[-1][-1])
