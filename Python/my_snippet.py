@@ -337,3 +337,54 @@ def rotate(matrix) -> None:
     tmp = list(map(list, list(zip(*matrix[::-1]))))
     for i in range(len(tmp)):
         matrix[i] = tmp[i]
+
+
+# 다익스트라
+# 시간복잡도 O(NlogN)
+import collections, heapq
+
+
+def dyjkstra(times, N, K):
+    graph = collections.defaultdict(list)
+    # 그래프 인접리스트 구현
+    for u, v, w in times:
+        graph[u].append((v, w))
+
+    # 큐변수: [(소요시간, 정점)]
+    Q = [(0, K)]
+    dist = collections.defaultdict(list)
+
+    while Q:
+        time, node = heapq.heappop(Q)
+        if node not in dist:
+            dist[node] = time
+            for v, w in graph[node]:
+                alt = time + w
+                heapq.heappush(Q, (alt, v))
+
+    # 모든 노드의 최단 경로 존재 여부 판별
+    if len(dist) == N:
+        return max(dist.values())
+    return -1
+
+
+# 벨만 포드
+# 음수 간선이 있는 경우
+
+# 플로이드 와샬
+# 모든 시작점에서 다른 모든 정점까지
+from itertools import product
+
+
+def floyd(n, s, a, b, fares):
+    dp = [[int(1e9) for _ in range(n)] for _ in range(n)]
+
+    for node in range(n):
+        dp[node][node] = 0
+    for u, v, w in fares:
+        dp[u - 1][v - 1] = dp[v - 1][u - 1] = w
+
+    for k, u, v in product(range(n), repeat=3):
+        if dp[u][v] > (w := dp[u][k] + dp[k][v]):
+            dp[u][v] = w
+    return min([dp[s - 1][k] + dp[k][a - 1] + dp[k][b - 1] for k in range(n)])
