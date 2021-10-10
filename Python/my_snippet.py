@@ -388,3 +388,34 @@ def floyd(n, s, a, b, fares):
         if dp[u][v] > (w := dp[u][k] + dp[k][v]):
             dp[u][v] = w
     return min([dp[s - 1][k] + dp[k][a - 1] + dp[k][b - 1] for k in range(n)])
+
+
+# 병합 정렬
+def merge_sort(unsorted_list):
+    def merge(left, right):
+        sorted_list = []
+        left_idx, right_idx = 0, 0
+        while left_idx < len(left) and right_idx < len(right):
+            if left[left_idx] < right[right_idx]:
+                sorted_list.append(left[left_idx])
+                left_idx += 1
+            else:
+                sorted_list.append(right[right_idx])
+                right_idx += 1
+
+        while left_idx < len(left):
+            sorted_list.append(left[left_idx])
+            left_idx += 1
+        while right_idx < len(right):
+            sorted_list.append(right[right_idx])
+            right_idx += 1
+        return sorted_list
+
+    if len(unsorted_list) <= 1:
+        return unsorted_list
+
+    piv = len(unsorted_list) // 2
+    left = merge_sort(unsorted_list[:piv])
+    right = merge_sort(unsorted_list[piv:])
+
+    return merge(left, right)
