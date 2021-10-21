@@ -172,10 +172,22 @@ import math
 
 
 def isPrime(number):
-    for i in range(2, int(math.sqrt(number)) + 1):
+    if number < 2:
+        return False
+    for i in range(2, int(number ** 0.5) + 1):
         if number % i == 0:
             return False
     return True
+
+
+# 소수 구하기
+# 에라토스테네스의 체
+def isPrime(n):
+    sieve = [True] * n
+    for i in range(2, int(n ** 0.5) + 1):  # n의 제곱근까지 모든 수를 확인
+        if sieve[i]:
+            for j in range(i * 2, n + 1, i):
+                sieve[j] = False
 
 
 # 달팽이
@@ -419,3 +431,29 @@ def merge_sort(unsorted_list):
     right = merge_sort(unsorted_list[piv:])
 
     return merge(left, right)
+
+
+# 시계 방향으로 1칸씩 옮기기
+def rotate(maps, x1, y1, x2, y2):
+    x1, y1, x2, y2 = x1 - 1, y1 - 1, x2 - 1, y2 - 1
+    vals = [maps[x1][y1]]
+
+    # 상우
+    temp = maps[x1][y1]
+    for y in range(y1 + 1, y2 + 1):
+        maps[x1][y], temp = temp, maps[x1][y]
+        vals.append(temp)
+    # 우하
+    for x in range(x1 + 1, x2 + 1):
+        maps[x][y2], temp = temp, maps[x][y2]
+        vals.append(temp)
+    # 하좌
+    for y in range(y2 - 1, y1 - 1, -1):
+        maps[x2][y], temp = temp, maps[x2][y]
+        vals.append(temp)
+    # 좌상
+    for x in range(x2 - 1, x1 - 1, -1):
+        maps[x][y1], temp = temp, maps[x][y1]
+        vals.append(temp)
+
+    return min(vals)

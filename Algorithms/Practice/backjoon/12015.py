@@ -18,4 +18,16 @@ def solution(N):
     return len(dp)
 
 
-print(solution(int(input().strip())))
+# print(solution(int(input().strip())))
+
+N = int(input().strip())
+nums = list(map(int, input().split()))
+
+dp = [nums[0]]
+for idx in range(1, N):
+    if nums[idx] > dp[-1]:
+        dp.append(nums[idx])
+    else:
+        insert_idx = bisect.bisect_left(dp, nums[idx])
+        dp[insert_idx] = nums[idx]
+print(len(dp))

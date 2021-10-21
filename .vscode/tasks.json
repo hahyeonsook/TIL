@@ -1,10 +1,20 @@
 {
+    // 사용자 지정 빌드 명령 및 컴파일러 스위치와 임의(빌드와 관련되지 않은)의 작업을 지정.
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "g++ build",
+            "label": "python run",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "S{file}"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "g++ run",
             "type": "shell",
             "command": "g++",
             "args": [
@@ -19,7 +29,7 @@
             "group": "build"
         },
         {
-            "label": "gcc build",
+            "label": "gcc run",
             "type": "shell",
             "command": "gcc",
             "args": [
@@ -36,11 +46,11 @@
         {
             "label": "execute",
             "command": "cmd",
-            "group": "test",
             "args": [
                 "/C",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
-            ]
+            ],
+            "group": "test",
         }
     ]
 }

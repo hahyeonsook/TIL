@@ -1,3 +1,4 @@
+# bfs + bineary_search
 import sys
 from collections import deque
 
@@ -11,9 +12,6 @@ for _ in range(M):
     bridges[u].append((v, w))
     bridges[v].append((u, w))
     max_w = max(max_w, w)
-
-for v in range(N):
-    bridges[v].sort(reverse=True)
 
 S, E = map(int, input().split())
 
