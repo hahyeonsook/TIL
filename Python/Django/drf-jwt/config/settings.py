@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import sys
 import json
 
 from pathlib import Path
@@ -22,17 +23,22 @@ CONFIG_SECRET_DIR = os.path.join(BASE_DIR, ".config_secret")
 CONFIG_SECRET_FILE = os.path.join(CONFIG_SECRET_DIR, "settings.json")
 
 config_secrets = json.loads(open(CONFIG_SECRET_FILE).read())
+for key, value in config_secrets.items():
+    # sys.modules[__name__]은 실행 중인 모듈에 대한 임시 모듈 객체로 갱신됨.
+    # https://velog.io/@byoungju1012/TIL-12.-Python-sys-%EB%AA%A8%EB%93%88%EA%B3%BC-path
+    # setattr, object에 존재하는 속성의 값을 바꾸거나, 새로운 속성을 생성하여 값을 부여함.
+    setattr(sys.modules[__name__], key, value)
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config_secrets["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -49,11 +55,14 @@ INSTALLED_APPS = [
     "accounts",
     # django-rest-framework
     "rest_framework",
+    "rest_framework.authtoken",
     "rest_framework_simplejwt.token_blacklist",
     # dj-rest-auth
     "dj_rest_auth",
+    "dj_rest_auth.registration",
     # django-allauth
     "allauth",
+    "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.kakao",
     "allauth.socialaccount.providers.github",
@@ -137,8 +146,12 @@ USE_TZ = True
 # User field 설정
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # JWT 설정
 REST_USER_JWT = True
