@@ -1,33 +1,29 @@
-import sys
-
-input = sys.stdin.readline
-
-ASCII = 65
-R, C = map(int, input().split())
-dist = [[-1 for _ in range(C)] for _ in range(R)]
-dist[0][0] = 1
-maps = []
-
-for _ in range(R):
-    maps.append(input().strip())
-
-cnt = -1
-dr, dc = [1, -1, 0, 0], [0, 0, 1, -1]
-
-
-def dfs(dist, vr, vc, visited, alphabets):
-    alphabet = ord(maps[vr][vc]) - ASCII
-
-    alphabets[alphabet], visited[vr][vc] = True, True
+def dfs(r, c, cnt):
+    global answer
+    if cnt > answer:
+        answer = cnt
     for d in range(4):
-        wr, wc = vr + dr[d], vc + dc[d]
-        if -1 < wr < R and -1 < wc < C and not visited[wr][wc]:
-            visited, alphabets = dfs(dist + 1, wr, wc, visited, alphabets)
+        mr, mc = r + dr[d], c + dc[d]
+        if -1 < mr < R and -1 < mc < C and not visited[mr][mc]:
+            if not alphabets[maps[mr][mc]]:
+                visited[mr][mc] = True
+                alphabets[maps[mr][mc]] = True
+                dfs(mr, mc, cnt + 1)
+                visited[mr][mc] = False
+                alphabets[maps[mr][mc]] = False
+    return
 
-    alphabets[alphabet], visited[vr][vc] = False, False
-    return visited, alphabets
+if __name__ == "__main__":
+    R, C = map(int, input().split())
+    alphabets = [False] * 26
+    maps = [[ord(char) - 65 for char in input().strip()] for _ in range(R)]
+    visited = [[False for _ in range(C)] for _ in range(R)]
 
+    dr = [1, -1, 0, 0]
+    dc = [0, 0, 1, -1]
 
-alphabets = [False] * 26
-visited = [[False for _ in range(C)] for _ in range(R)]
-print(dfs(1, 0, 0, visited, alphabets))
+    answer = -1
+    visited[0][0] = True
+    alphabets[maps[0][0]] = True
+    dfs(0, 0, 1)
+    print(answer)
